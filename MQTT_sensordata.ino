@@ -84,8 +84,8 @@ void loop()
   Serial.println(" %");
 
   Serial.print("Pressure    = ");
-  Serial.print(pressure);
-  Serial.println(" kPa");
+  Serial.print(pressure*10);
+  Serial.println(" hPa");
 
   Serial.print("Illuminance = ");
   Serial.print(illuminance);
@@ -102,10 +102,7 @@ void loop()
 
     // print an empty line
   Serial.println();
-
-    // wait 1 second to print again
-  delay(1000);
-  if (!client.connected()) 
+   if (!client.connected()) 
     {
       reconnect();
     }
@@ -130,9 +127,11 @@ void loop()
   client.publish("fuktighet", hum);
 
   int Pressure = int(ENV.readPressure());
-  float trykk = Pressure ;
+  float trykk = Pressure*10 ;
   char hPa[5];
   sprintf(hPa, "%.2f", trykk);
   client.publish("lufttrykk", hPa);
   
-}
+    // wait 1 second to print again
+  delay(1000);
+ }
